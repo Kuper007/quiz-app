@@ -43,8 +43,7 @@ const Question = ({
 }: QuestionProps) => {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [value, setValue] = useState<string | null>(null);
-  const [correctMode, setCorrectMode] = useState(false);
-  const [incorrectMode, setIncorrectMode] = useState(false);
+  const [selectedMode, setSelectedMode] = useState(false);
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -52,24 +51,21 @@ const Question = ({
 
   const checkAnswer = () => {
     if (value === answer) {
-      setCorrectMode(true);
       increasePoints();
-    } else {
-      setIncorrectMode(true);
     }
+    setSelectedMode(true);
   };
 
   const goToNextQuestion = () => {
     setValue(null);
-    setCorrectMode(false);
-    setIncorrectMode(false);
+    setSelectedMode(false);
     next(questionNumber);
   };
 
   const getOptionStyle = (option: Option) => {
-    if ((correctMode || incorrectMode) && option.value === answer) {
+    if (selectedMode && option.value === answer) {
       return { border: `1px solid ${green[500]}`, borderRadius: '8px', marginBottom: '6px', marginRight: '0px', background: green[300] };
-    } else if (incorrectMode && option.value === value) {
+    } else if (selectedMode && option.value === value) {
       return { border: `1px solid ${red[500]}`, borderRadius: '8px', marginBottom: '6px', marginRight: '0px', background: red[300] };
     } else {
       return { border: '1px solid #D9D9D9', borderRadius: '8px', marginBottom: '6px', marginRight: '0px' };
@@ -108,7 +104,7 @@ const Question = ({
                   key={option.value}
                   sx={getOptionStyle(option)}
                   value={option.value}
-                  control={<Radio disabled={correctMode || incorrectMode} />}
+                  control={<Radio disabled={selectedMode} />}
                   label={option.label}
                 />
               ))}
@@ -116,7 +112,7 @@ const Question = ({
           </FormControl>
         </CardContent>
       </Card>
-      {(correctMode || incorrectMode) ?
+      {selectedMode ?
         <Button onClick={goToNextQuestion} sx={{ marginTop: '16px' }} variant="contained" size="medium">
           {questionNumber === totalQuestions ? 'Finish quiz' : 'Next question'}
         </Button> :
