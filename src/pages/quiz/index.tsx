@@ -4,23 +4,26 @@ import Question from '../../components/Question';
 import { Box } from '@mui/material';
 import { questions } from './constants';
 import Result from '../../components/Result';
+import { shuffleArray } from '../../utils';
+
+const shuffledQuestions = shuffleArray(questions);
 
 const Quiz = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
+  const [currentQuestion, setCurrentQuestion] = useState(shuffledQuestions[0]);
   const [finishMode, setFinishMode] = useState(false);
   const [points, setPoints] = useState(0);
 
   const onNextHandler = (ind: number) => {
-    if (ind === questions.length) {
+    if (ind === shuffledQuestions.length) {
       setFinishMode(true);
     } else {
-      setCurrentQuestion(questions[ind]);
+      setCurrentQuestion(shuffledQuestions[ind]);
     }
   };
 
   const onRestart = () => {
     setFinishMode(false);
-    setCurrentQuestion(questions[0]);
+    setCurrentQuestion(shuffledQuestions[0]);
     setPoints(0);
   };
 
@@ -33,14 +36,14 @@ const Quiz = () => {
           answer={currentQuestion.answer}
           options={currentQuestion.options}
           question={currentQuestion.question}
-          questionNumber={questions.indexOf(currentQuestion) + 1}
-          totalQuestions={questions.length}
+          questionNumber={shuffledQuestions.indexOf(currentQuestion) + 1}
+          totalQuestions={shuffledQuestions.length}
           next={onNextHandler}
           increasePoints={() => setPoints(point => point + 1)}
         /> : 
         <Result
           result={points}
-          total={questions.length}
+          total={shuffledQuestions.length}
           onRestart={onRestart}
         />
       }

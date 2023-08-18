@@ -1,8 +1,8 @@
-import ross from '../../assets/ross.jpeg';
-import chandler from '../../assets/chandler.jpeg';
-import monica from '../../assets/monica.jpeg';
-import emma from '../../assets/emma.jpeg';
-import ursula from '../../assets/ursula.jpeg';
+import ross from '../../assets/1.jpeg';
+import chandler from '../../assets/2.jpeg';
+import monica from '../../assets/3.jpeg';
+import emma from '../../assets/4.jpeg';
+import ursula from '../../assets/5.jpeg';
 
 export const questions = [
   {

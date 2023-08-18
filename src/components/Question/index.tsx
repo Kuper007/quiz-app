@@ -78,7 +78,7 @@ const Question = ({
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', padding: '12px' }}>
-      <Card sx={!isMobile ? { minWidth: '440px' } : {}}>
+      <Card sx={!isMobile ? { width: '440px' } : {}}>
         <CardHeader
           sx={{ background: '#1976d2' }}
           title={
