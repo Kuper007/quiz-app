@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import logo from '../../assets/logo.jpg';
-import friends from '../../assets/friends.jpeg';
 import Question from '../../components/Question';
-import { Button, Typography } from '@mui/material';
-import Confetti from 'react-confetti';
+import { Box } from '@mui/material';
 import { questions } from './constants';
+import Result from '../../components/Result';
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(questions[0]);
@@ -26,8 +25,8 @@ const Quiz = () => {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100vh' }}>
-      <img height={150} src={logo} alt="logo" />
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100vh' }}>
+      <img style={{ maxWidth: '100vw' }} height={150} src={logo} alt="logo" />
       {!finishMode ? 
         <Question
           image={currentQuestion.image}
@@ -39,21 +38,13 @@ const Quiz = () => {
           next={onNextHandler}
           increasePoints={() => setPoints(point => point + 1)}
         /> : 
-        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column'  }}>
-          <Typography variant="h4">
-            Your result: 
-          </Typography>
-          <Typography textAlign="center" variant="h1">
-            {`${points} / ${questions.length}`} 
-          </Typography>
-          <img height={300} src={friends} alt="friends" />
-          <Button onClick={onRestart} variant="contained" size="large" sx={{ marginTop: '12px' }}>
-            Restart the quiz
-          </Button>
-          <Confetti />
-        </div>
+        <Result
+          result={points}
+          total={questions.length}
+          onRestart={onRestart}
+        />
       }
-    </div>
+    </Box>
   );
 };
 
