@@ -54,7 +54,7 @@ const Question = ({
 
   return (
     <FormControl>
-      <Card>
+      <Card sx={{ minWidth: '440px' }}>
         <CardHeader
           sx={{ background: '#1976d2' }}
           title={
